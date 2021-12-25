@@ -1,6 +1,6 @@
 {
   "name": "aniscroll",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Play an animation when whell scrolls.",
   "main": "index.js",
   "scripts": {

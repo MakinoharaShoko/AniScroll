@@ -14,17 +14,19 @@ class AniScroll {
         let style = document.createElement('style');
         this.style = style;
         document.head.appendChild(style);
-        setInterval(()=>{this.setElementAni(this)}, interval);
+        setInterval(() => { this.setElementAni(this) }, interval);
         this.interval = interval;
     }
 
-    addElementController(element, startValue, speed) {
+    addElementController(element, startValue, speed, existCallback) {
         this.elementControlList.push({
             elementId: element,
             currentPosition: 0,
             previousPosition: 0,
             startValue: startValue,
-            speed: speed
+            speed: speed,
+            existCallback: existCallback,
+            callbackDone: false
         });
     }
 
@@ -37,8 +39,13 @@ class AniScroll {
             //元素开始进入视图
             if (e.startValue <= this.currentPosition) {
                 e.currentPosition = Math.round(this.currentPosition * e.speed - e.startValue);
+                if (!e.callbackDone) {
+                    e.existCallback();
+                    e.callbackDone = true;
+                }
             } else {//元素不在视图内
                 e.currentPosition = 0;
+                e.callbackDone = false;
             }
         }
     }
