@@ -9,7 +9,10 @@ class AniScroll {
     init(interval) {
         let that = this;
         document.addEventListener('wheel', function (event) {
-            that.act(event.deltaY*0.3)
+            if (event.deltaY > 0)
+                that.act(100)
+            else
+                that.act(-100)
         }, false);
         let style = document.createElement('style');
         this.style = style;
@@ -38,7 +41,7 @@ class AniScroll {
         for (let e of this.elementControlList) {
             //元素开始进入视图
             if (e.startValue <= this.currentPosition) {
-                e.currentPosition = Math.round(this.currentPosition * e.speed - e.startValue);
+                e.currentPosition = Math.round((this.currentPosition - e.startValue) * e.speed);
                 if (!e.callbackDone) {
                     e.existCallback();
                     e.callbackDone = true;
