@@ -9,7 +9,7 @@ class AniScroll {
     init(interval) {
         let that = this;
         document.addEventListener('wheel', function (event) {
-            that.act(event.deltaY)
+            that.act(event.deltaY*0.3)
         }, false);
         let style = document.createElement('style');
         this.style = style;
